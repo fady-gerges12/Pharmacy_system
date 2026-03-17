@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0dcaf0;
+        }
+
+        .image-section {
+            background-image: url("../photo_2026-02-15_19-07-08.jpg");
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+        .d-flex{
+            flex-direction: column;
+        
+        }
+
+        .d-flex h3{
+            font-size: 80px;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: 500px;
+            color: white;
+            font-style: italic;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 500px;
+            box-shadow: 0 5px 20px rgba(240, 236, 236, 0.94);
+        }
+
+        @media (max-width: 1076px) {
+            .login-box{
+                width: 350px;
+            }
+        }
+        @media (max-width: 767px) {
+            .login-box{
+                width: 300px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container-fluid h-100">
+    
+        <div class="row h-100">
+    
+            <!-- قسم الصورة -->
+    
+            <div class="col-6 image-section"></div>
+    
+            <!-- قسم تسجيل الدخول -->
+    
+            <div class="col-6 login-section d-flex ">
+    
+                <h3 class="text-center mb-5">Log In </h3>
+    
+                <div class="login-box">
+    
+                    <input id="username" class="form-control mb-4" placeholder="Username">
+    
+                    <div class="mb-4 position-relative">
+                        <input type="password" id="password" class="form-control" placeholder="Password">
+                        <span onclick="togglePassword()" style="position:absolute; right:10px; top:8px; cursor:pointer;">
+                            👁
+                        </span>
+    
+                    </div>
+    
+                    <button class="btn btn-dark w-100" onclick="login()">
+                        Log in
+                    </button>
+    
+                    <p id="error" class="text-danger text-center mt-3"></p>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+    <script src="../js/login.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title> Change Password </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .box-body .btn{
+            width: 200px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="d-flex">
+        <div class="d-flex flex-column bg-dark text-white" style="width:220px; min-height:100vh;">
+            <h4 class="mb-3 mt-2 p-4 dashboard">management </h4>
+            <a href="index.html" class="text-white p-3 text-decoration-none">Dashboard</a>
+            <a href="clients.html" class="text-white p-3 text-decoration-none">Clients</a>
+            <a href="chanPass.html" class="text-white p-3 text-decoration-none">Change Password</a>
+            <a class="text-danger p-3 text-decoration-none" onclick="logout()">Logout</a>
+        </div>
+
+        <div class="container-fluid p-4 password-card">
+
+            <div class="header bg-dark text-white text-center p-3 mt-2 mb-3">
+                <h4> Change Password </h4>
+            </div>
+
+            <div class="box-body p-5">
+
+                <div class="mb-4 position-relative">
+                    <input type="password" id="oldPass" class="form-control" placeholder="Old Password">
+                    <span onclick="togglePasswordOld()" style="position:absolute; right:10px; top:8px; cursor:pointer;">
+                        👁
+                    </span>
+
+                </div>
+
+                <div class="mb-4 position-relative">
+                    <input type="password" id="newPass" class="form-control" placeholder="New password">
+                    <span onclick="togglePasswordNew()" style="position:absolute; right:10px; top:8px; cursor:pointer;">
+                        👁
+                    </span>
+
+                </div>
+
+                <div class="mb-4 position-relative">
+                    <input type="password" id="confirmPass" class="form-control" placeholder="Confirm Password">
+                    <span onclick="togglePasswordConfirm()"
+                        style="position:absolute; right:10px; top:8px; cursor:pointer;">
+                        👁
+                    </span>
+
+                </div>
+
+                <button class="btn btn-dark " onclick="changePassword()">
+                    Save Password
+                </button>
+
+                <p id="msg" class=""></p>
+
+            </div>
+
+        </div>
+    </div>
+    <footer class="bg-dark text-white mt-2">
+        <div class="container py-4">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <h5 class="mb-3">Dashboard </h5>
+                    <p class="small">
+                        An invoice and customer management system that helps you keep your business running smoothly.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5 class="mb-3">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white text-decoration-none links">Dashboard</a></li>
+                        <li><a href="clients.html" class="text-white text-decoration-none links">Clients</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact</h5>
+                    <p class="small mb-1">📧 email@fadyjrjs891.com</p>
+                    <p class="small mb-1">📞 01221638196</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="text-center py-2 border-top border-secondary">
+            <small>© 2026 جميع الحقوق محفوظة</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/chanPass.js"> </script>
+    <script src="../js/utils.js"> </script>
+
+</body>
+</html>

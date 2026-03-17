@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <title>بيانات العميل</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <div class="d-flex">
+        <div class="d-flex flex-column bg-dark text-white" style="width:220px; min-height:100vh;">
+            <h4 class="mb-3 mt-2 p-4 dashboard">management </h4>
+            <a href="index.html" class="text-white p-3 text-decoration-none">Dashboard</a>
+            <a href="clients.html" class="text-white p-3 text-decoration-none">Clients</a>
+            <a href="chanPass.html" class="text-white p-3 text-decoration-none">Change Password</a>
+            <a class="text-danger p-3 text-decoration-none" onclick="logout()">Logout</a>
+
+        </div>
+
+        <div class="container-fluid p-4">
+            <h1 class="mb-5 mt-2 text-center bg-dark text-white p-3 header">Clients data </h1>
+
+            <div class="card mb-3">
+                <div class="card-body"> 
+                    <p><b>name :</b> <input type="text" id="clientName"></input></p>
+                    <p><b>phone  :</b> <input type="text" id="clientPhone"></input></p>
+                    <p><b>Type :</b> <input type="text" id="clientType"></input></p>
+                    <p><b>Your Interests :</b> <select id="clientInterest" style="width: 150px;">
+                        <option value="temp">temp</option>
+                        <option value="Cosmetics">Cosmetics</option>
+                        <option value="Drugs">Drugs</option>
+                        <option value="Discounts">Discounts</option>
+                        <option value="Chronic">Chronic</option>
+                    </select></p>
+                    <p><b>Total Amount :</b> <input type="text" id="totalAmount"></input></p>
+                    <p><b>Total Points :</b> <input type="text" id="totalPoints"></input></p>
+                    <p><b>Used Points :</b> <input type="text" id="usedPoints"></input></p>
+                    <p><b>Avaliable Points :</b> <input type="text" id="clientBonus"></input></p>
+                    <button class="btn btn-primary" onclick="updateClient()">Save Edit </button>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>Invoices</h5>
+                    <input type="date" id="searchInvoice" class="form-control mb-2" oninput="filterInvoices()">
+                    <button class="btn btn-success mb-4" onclick="showInvoiceForm()">Add Invoice </button>
+
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Invoice Number </th>
+                                <th>Date</th>
+                                <th>Value</th>
+                                <th>Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card my-3 p-3" id="invoiceForm" style="display:none">
+                <h5>Add / invoice Edit </h5>
+                <input id="invoiceNumber" class="form-control mb-2" placeholder="Invoice Number ">
+                <input id="invoiceAmount" class="form-control mb-2" placeholder="Value">
+                <input id="invoiceDate" type="date" class="form-control mb-2">
+                <button class="btn btn-primary" onclick="saveInvoice()">Save</button>
+                <button class="btn btn-secondary" onclick="hideInvoiceForm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-white mt-2">
+        <div class="container py-4">
+            <div class="row">
+    
+                <div class="col-md-4">
+                    <h5 class="mb-3">Dashboard </h5>
+                    <p class="small">
+                    An invoice and customer management system that helps you keep your business running smoothly.
+                </p>
+                </div>
+    
+                <div class="col-md-4">
+                    <h5 class="mb-3">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white text-decoration-none links">Dashboard</a></li>
+                        <li><a href="clients.html" class="text-white text-decoration-none links">Clients</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact</h5>
+                    <p class="small mb-1">📧 email@fadyjrjs891.com</p>
+                    <p class="small mb-1">📞 01221638196</p>
+                </div>
+    
+            </div>
+        </div>
+    
+        <div class="text-center py-2 border-top border-secondary">
+            <small>© 2026 جميع الحقوق محفوظة</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/client-view.js"></script>
+</body>
+
+</html>
