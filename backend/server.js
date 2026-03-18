@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const port =process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const uri = "mongodb://admin:fadygerges133@ac-zufc9nj-shard-00-00.ihcdy9a.mongodb.net:27017,ac-zufc9nj-shard-00-01.ihcdy9a.mongodb.net:27017,ac-zufc9nj-shard-00-02.ihcdy9a.mongodb.net:27017/?ssl=true&replicaSet=atlas-obhsj5-shard-0&authSource=admin&appName=Cluster0";
-
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
