@@ -8,6 +8,6 @@ function calculateBonus(totalAmount) {
 function logout() {
   if (confirm("هل تريد تسجيل الخروج؟")) {
     localStorage.setItem("loggedIn","false");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   }
 }
