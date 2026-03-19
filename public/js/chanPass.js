@@ -1,5 +1,5 @@
 if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "logIn.html";
+  window.location.href = "index.html";
 }
 
 function changePassword() {

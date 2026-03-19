@@ -3,7 +3,7 @@ const clientId = urlParams.get("id");
 const API = "https://pharmacysystem-production.up.railway.app";
 
 if (localStorage.getItem("loggedIn") !== "true"){
-  window.location.href="logIn.html";
+  window.location.href="index.html";
 }
 
 let allInvoices = [];

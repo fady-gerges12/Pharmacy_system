@@ -19,7 +19,7 @@ function login() {
   if (username === USERNAME && password === savedPassword) {
     localStorage.setItem("loggedIn", "true");
 
-    window.location.href = "index.html";
+    window.location.href = "home.html";
   } else {
     document.getElementById("error").innerText ="اسم المستخدم او كلمة المرور غير صحيحة";
   }
