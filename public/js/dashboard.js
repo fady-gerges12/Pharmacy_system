@@ -1,7 +1,7 @@
-const API = "https://pharmacysystem-production.up.railway.app";
+const API = "http://localhost:3000";
 
-if (localStorage.getItem("loggedIn") !== "true"){
-  window.location.href="index.html";
+if (localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "index.html";
 }
 
 // تحميل عدد العملاء

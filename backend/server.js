@@ -3,12 +3,15 @@ const cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const port = process.env.PORT || 3000;
+
+const port = 3000;
 const app = express();
+
 app.use(cors());
 app.use(bodyParser.json());
 
 const uri = process.env.MONGO_URI;
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -19,97 +22,205 @@ const client = new MongoClient(uri, {
 
 let db;
 
-async function start() {
-  await client.connect();
-  db = client.db("mydb");
-  console.log("MongoDB Connected");
-  app.listen(3000, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
+// connect
+async function run() {
+  try {
+    await client.connect();
+    db = client.db("Pharmacy_DB");
+    await db.command({ ping: 1 });
+    console.log("✅ Connected to MongoDB!");
+  } catch (error) {
+    console.error("❌ Connection error", error);
+  }
 }
 
-start();
-
-
+run().catch(console.dir);
 
 /////////////////////////
-//// CLIENTS API
+// 🔥 Recalculate last invoice
+/////////////////////////
+async function recalcLastInvoice(clientId) {
+  const lastInvoice = await db
+    .collection("invoices")
+    .find({ clientId })
+    .sort({ date: -1 })
+    .limit(1)
+    .toArray();
+
+  const lastDate = lastInvoice.length ? lastInvoice[0].date : null;
+
+  await db
+    .collection("clients")
+    .updateOne(
+      { _id: new ObjectId(clientId) },
+      { $set: { lastInvoiceDate: lastDate } },
+    );
+}
+
+/////////////////////////
+// CLIENTS
 /////////////////////////
 
-// جلب جميع العملاء
 app.get("/clients", async (req, res) => {
   const clients = await db.collection("clients").find().toArray();
   res.json(clients);
 });
 
-// إضافة عميل
 app.post("/clients", async (req, res) => {
-  const result = await db.collection("clients").insertOne(req.body);
-  res.json(result);
+  try {
+    const result = await db.collection("clients").insertOne(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to add client" });
+  }
 });
 
-// تعديل عميل
 app.put("/clients/:id", async (req, res) => {
   const id = req.params.id;
-  const result = await db.collection("clients").updateOne(
-    { _id: new ObjectId(id) },
-    { $set: req.body }
-  );
+
+  const result = await db
+    .collection("clients")
+    .updateOne({ _id: new ObjectId(id) }, { $set: req.body });
+
   res.json(result);
 });
 
-// حذف عميل
 app.delete("/clients/:id", async (req, res) => {
-  const id = req.params.id;
-  const result = await db.collection("clients").deleteOne({ _id: new ObjectId(id) });
-  res.json(result);
+  try {
+    const id = req.params.id;
+
+    console.log("Deleting client:", id);
+
+    const deleteInvoices = await db.collection("invoices").deleteMany({
+      clientId: id,
+    });
+
+    const deleteClient = await db.collection("clients").deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    console.log("Deleted client:", deleteClient.deletedCount);
+
+    res.json({
+      invoicesDeleted: deleteInvoices.deletedCount,
+      clientDeleted: deleteClient.deletedCount,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Delete failed" });
+  }
 });
 
-// جلب بيانات عميل مع الفواتير
 app.get("/clients/:id", async (req, res) => {
   const id = req.params.id;
-  const clientData = await db.collection("clients").findOne({ _id: new ObjectId(id) });
-  const invoices = await db.collection("invoices").find({ clientId: id }).toArray();
+
+  const clientData = await db.collection("clients").findOne({
+    _id: new ObjectId(id),
+  });
+
+  const invoices = await db
+    .collection("invoices")
+    .find({ clientId: id })
+    .toArray();
+
   res.json({ client: clientData, invoices });
 });
 
-// عدد العملاء
-app.get("/clients/count", async (req,res)=>{
-  const count = await db.collection("clients").countDocuments();
-  res.json({count});
-});
-
-
 /////////////////////////
-//// INVOICES
+// INVOICES
 /////////////////////////
 
-// جلب فواتير عميل
-app.get("/invoices/:clientId", async (req,res)=>{
+app.get("/invoices/:clientId", async (req, res) => {
   const clientId = req.params.clientId;
-  const invoices = await db.collection("invoices").find({clientId}).toArray();
+
+  const invoices = await db.collection("invoices").find({ clientId }).toArray();
+
   res.json(invoices);
 });
 
-// إضافة فاتورة
-app.post("/invoices", async (req,res)=>{
-  const result = await db.collection("invoices").insertOne(req.body);
-  res.json(result);
+/////////////////////////
+// ADD INVOICE
+/////////////////////////
+
+app.post("/invoices", async (req, res) => {
+  try {
+    const newInvoice = {
+      ...req.body,
+      date: req.body.date ? new Date(req.body.date) : new Date(),
+    };
+
+    const result = await db.collection("invoices").insertOne(newInvoice);
+
+    await recalcLastInvoice(req.body.clientId);
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to add invoice" });
+  }
 });
 
-// تعديل فاتورة
-app.put("/invoices/:id", async (req,res)=>{
+/////////////////////////
+// UPDATE INVOICE
+/////////////////////////
+
+app.put("/invoices/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const invoice = await db.collection("invoices").findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!invoice) {
+      return res.status(404).json({ error: "Invoice not found" });
+    }
+
+    const updatedData = {
+      ...req.body,
+      date: req.body.date ? new Date(req.body.date) : invoice.date,
+    };
+
+    await db
+      .collection("invoices")
+      .updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
+
+    await recalcLastInvoice(invoice.clientId);
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Update failed" });
+  }
+});
+
+/////////////////////////
+// DELETE INVOICE
+/////////////////////////
+
+app.delete("/invoices/:id", async (req, res) => {
   const id = req.params.id;
-  await db.collection("invoices").updateOne({_id:new ObjectId(id)}, {$set:req.body});
-  res.json({ok:true});
+
+  const invoice = await db.collection("invoices").findOne({
+    _id: new ObjectId(id),
+  });
+
+  if (!invoice) {
+    return res.status(404).json({ error: "Invoice not found" });
+  }
+
+  await db.collection("invoices").deleteOne({
+    _id: new ObjectId(id),
+  });
+
+  await recalcLastInvoice(invoice.clientId);
+
+  res.json({ ok: true });
 });
 
-// حذف فاتورة
-app.delete("/invoices/:id", async (req,res)=>{
-  const id = req.params.id;
-  await db.collection("invoices").deleteOne({_id:new ObjectId(id)});
-  res.json({ok:true});
+/////////////////////////
+// START SERVER
+/////////////////////////
+
+app.listen(port, () => {
+  console.log(`🚀 Server running on http://localhost:${port}`);
 });
-
-
-

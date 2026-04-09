@@ -1,24 +1,40 @@
 .container-fluid{
     background-color: #10cab7 !important;
 }
-.bg-dark a:hover {
-    background-color: #06cdb9;
-    padding-left: 22px !important;
-    transition: .5s;
-    color: #040707 !important;
+.navbar-expand-lg .navbar-collapse a{
+    font-size: 17px;
 }
-
-/* تعديل حجم sidebar على الشاشات الصغيرة */
-@media (max-width: 768px) {
-    .d-flex>.bg-dark {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
+.navbar-expand-lg .navbar-collapse a:hover {
+    background-color: #040707;
+    border-radius: 5px;
+    transition: .5s;
+    color: #10cab7 !important;
+}
+.navbar-expand-lg .navbar-collapse .text-danger:hover {
+    background-color: #e41616;
+    border-radius: 5px;
+    transition: .5s;
+    color: white !important;
+}
+@media (max-width: 992px) {
+    .navbar-expand-lg .navbar-collapse a:hover {
+        background-color: #040707;
+        border-radius: 5px;
+        transition: .5s;
+        padding-left: 6px;
+        color: #10cab7 !important;
+}
+    .navbar-expand-lg .navbar-collapse .text-danger{
+        margin-bottom: 10px;
     }
 }
-.d-flex .dashboard{
-    border-bottom: 2px solid white;
-
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        justify-content: flex-end;
+    }
+    .navbar-expand-lg .navbar-collapse a {
+        margin: 2px;
+    }
 }
 .container-fluid .numOfClient{
     width: 120%;
@@ -36,7 +52,6 @@
 .btn:hover {
     box-shadow: 0 0 5px 5px #fffffff9;
     transition: .3s;
-    font-size: 17px;
 }
 footer .links:hover{
 color:#0dcaf0 !important;
@@ -48,3 +63,32 @@ background-color: #212529 !important;
 footer{
 box-shadow:0 -2px 10px rgba(0,0,0,0.2);
 }
+
+/* /////////////////////////////////////////////// */
+/* clients page */
+/* ////////////////////////////////////////////////// */
+
+.container .search-all select {
+    width: 10%;
+    height: 70%;
+    border-radius: 5px;
+}
+.container .search-all input {
+    width: 60%;
+}
+input {
+    border-radius: 5px;
+}
+.container .search-point button, .search-date button {
+    height: 40px;
+    width: 100px;
+    margin: auto ;
+}
+.container .search-point , .search-date {
+    border: #040707 3px solid;
+    border-radius: 12px;
+}
+.d-hidden {
+    display: none !important;
+}
+

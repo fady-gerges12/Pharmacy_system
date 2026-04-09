@@ -4,8 +4,8 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title> Change Password </title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -17,14 +17,26 @@
 </head>
 <body>
 
-    <div class="d-flex">
-        <div class="d-flex flex-column bg-dark text-white" style="width:220px; min-height:100vh;">
-            <h4 class="mb-3 mt-2 p-4 dashboard">management </h4>
-            <a href="home.html" class="text-white p-3 text-decoration-none">Dashboard</a>
-            <a href="clients.html" class="text-white p-3 text-decoration-none">Clients</a>
-            <a href="chanPass.html" class="text-white p-3 text-decoration-none">Change Password</a>
-            <a class="text-danger p-3 text-decoration-none pointer " onclick="logout()">Logout</a>
-        </div>
+    <div>
+        <!-- Example Code Start-->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand m-2 fw-bold" href="#">Dr.Maher Pharmacy</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active text-white" aria-current="page" href="home.html">Home</a>
+                        <a class="nav-link text-white" href="clients.html">Clients</a>
+                        <a class="nav-link text-white" href="chanPass.html">Change Password</a>
+                        <a class="nav-link text-danger btn" onclick="logout()" >Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Example Code End -->
 
         <div class="container-fluid p-4 password-card">
 

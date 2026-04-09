@@ -1,10 +1,12 @@
+// حساب البونص 
 function calculateBonus(totalAmount) {
-  // كل 1000 جنيه = 2% بونص
-  const bonusPerThousand = 20; // 20% من 1000
-  const thousands = Math.floor(totalAmount / 1000);
+  // كل 50 جنيه = 4% بونص
+  const bonusPerThousand = 2; // 4% من 50
+  const thousands = Math.floor(totalAmount / 50);
   return thousands * bonusPerThousand;
 }
 
+// فانكشن تسجيل الخروج
 function logout() {
   if (confirm("هل تريد تسجيل الخروج؟")) {
     localStorage.setItem("loggedIn","false");
