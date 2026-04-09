@@ -221,6 +221,6 @@ app.delete("/invoices/:id", async (req, res) => {
 // START SERVER
 /////////////////////////
 
-app.listen(port,"0.0.0.0", () => {
+app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
 });
