@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const clientId = urlParams.get("id");
-const API = "http://localhost:3000";
+const API = "https://pharmacysystem-production.up.railway.app/";
 
 if (localStorage.getItem("loggedIn") !== "true") {
   window.location.href = "index.html";
