@@ -1,4 +1,4 @@
-const API = "https://pharmacysystem-production.up.railway.app/";
+const API = "https://pharmacysystem-production.up.railway.app";
 
 if (localStorage.getItem("loggedIn") !== "true") {
   window.location.href = "index.html";
