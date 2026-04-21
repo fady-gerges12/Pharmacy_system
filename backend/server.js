@@ -4,7 +4,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const app = express();
 
 app.use(cors());
@@ -60,6 +60,9 @@ async function recalcLastInvoice(clientId) {
 /////////////////////////
 // CLIENTS
 /////////////////////////
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.get("/clients", async (req, res) => {
   const clients = await db.collection("clients").find().toArray();

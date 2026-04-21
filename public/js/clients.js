@@ -1,4 +1,4 @@
-const API = "https://pharmacysystem-production.up.railway.app";
+const API = "http://localhost:5000";
 
 window.addEventListener("pageshow", function (event) {
   loadClients();
