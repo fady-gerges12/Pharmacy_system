@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGO_URI; 
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -177,8 +177,7 @@ app.put("/invoices/:id", async (req, res) => {
     if (!invoice) {
       return res.status(404).json({ error: "Invoice not found" });
     }
-
-    const updatedData = {
+const updatedData = {
       ...req.body,
       date: req.body.date ? new Date(req.body.date) : invoice.date,
     };
