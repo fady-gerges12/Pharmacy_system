@@ -1,4 +1,4 @@
-const API = "http://localhost:5000";
+const API = "https://pharmacy-system-henna.vercel.app";
 
 window.addEventListener("pageshow", function (event) {
   loadClients();

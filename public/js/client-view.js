@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const clientId = urlParams.get("id");
-const API = "http://localhost:5000";
+const API = "https://pharmacy-system-henna.vercel.app";
 
 if (localStorage.getItem("loggedIn") !== "true") {
   window.location.href = "index.html";
