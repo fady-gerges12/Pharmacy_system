@@ -190,7 +190,7 @@ async function saveInvoice() {
 async function deleteInvoice(id) {
   if (confirm("هل أنت متأكد من حذف الفاتورة؟")) {
     await fetch(`${API}/invoices/${id}`, { method: "DELETE" });
-
+    
     await loadClient();
     await updateBonusOnServer();
   }

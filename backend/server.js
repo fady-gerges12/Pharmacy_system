@@ -166,6 +166,49 @@ const result = await database.collection("invoices").insertOne(newInvoice);
   }
 });
 
+app.put("/invoices/:id", async (req, res) => {
+  try {
+    const database = await ensureDb();
+    const id = req.params.id;
+    const result = await database
+      .collection("invoices")
+      .updateOne({ _id: new ObjectId(id) }, { $set: req.body });
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Update failed" });
+  }
+});
+
+app.delete("/invoices/:id", async (req, res) => {
+  try {
+    const database = await ensureDb();
+    const id = req.params.id;
+    console.log("Deleting invoice with ID:", id);
+
+    // هات الفاتورة الأول
+    const invoice = await database.collection("invoices").findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!invoice) {
+      return res.status(404).json({ error: "Invoice not found" });
+    }
+
+    // احذفها
+    await database.collection("invoices").deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    // حدث آخر فاتورة
+    await recalcLastInvoice(invoice.clientId);
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Delete failed" });
+  }
+});
+
 // START SERVER (For Local testing)
 if (process.env.NODE_ENV !== 'production') {
   app.listen(port, () => {
